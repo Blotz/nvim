@@ -101,7 +101,7 @@ return {
       url_open.setup {}
     end,
     keys = {
-      { "<leader>", "<cmd>URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
+      { "<C-LeftMouse>", "<cmd>URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
     },
   },
 }
