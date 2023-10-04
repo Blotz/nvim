@@ -18,6 +18,13 @@ return {
     "f-person/git-blame.nvim",
     event = "User AstroGitFile",
   },
+  -- {
+  --   "chrisgrieser/nvim-tinygit",
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "rcarriga/nvim-notify", -- optional, for nice notifications
+  --   },
+  -- },
 
   -- copilot
   {
@@ -74,5 +81,17 @@ return {
     },
     cmd = { "CompilerOpen", "CompilerToggleResults" },
     opts = {},
+  },
+
+  -- lazy.nvim
+  {
+    "sontungexpt/url-open",
+    event = "VeryLazy",
+    cmd = "URLOpenUnderCursor",
+    config = function()
+      local status_ok, url_open = pcall(require, "url-open")
+      if not status_ok then return end
+      url_open.setup {}
+    end,
   },
 }
