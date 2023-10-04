@@ -5,6 +5,13 @@ return {
     main = "project_nvim",
     event = "VeryLazy",
     opts = { ignore_lsp = { "lua_ls" } },
+    keys = {
+      -- mappings seen under group name "Session"
+      ["<leader>Sp"] = {
+        function() require("telescope").extensions.projects.projects() end,
+        desc = "Pick project",
+      },
+    },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -93,5 +100,8 @@ return {
       if not status_ok then return end
       url_open.setup {}
     end,
+    keys = {
+      { "<leader>", "<cmd>URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
+    },
   },
 }
