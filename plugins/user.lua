@@ -6,10 +6,10 @@ return {
     event = "VeryLazy",
     opts = { ignore_lsp = { "lua_ls" } },
     keys = {
-      -- mappings seen under group name "Session"
-      ["<leader>Sp"] = {
-        function() require("telescope").extensions.projects.projects() end,
-        desc = "Pick project",
+      {
+        "<leader>Sp",
+        "<cmd>:Telescope projects<cr>",
+        desc = "Find project files",
       },
     },
   },
