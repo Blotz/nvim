@@ -16,6 +16,8 @@ return {
         "ruff_lsp",
         -- toml
         "taplo",
+        -- haskell
+        "hls",
       })
     end,
   },
@@ -47,10 +49,9 @@ return {
     opts = function(_, opts)
       -- add more things to the ensure_installed table protecting against community packs modifying it
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
-        -- bash
         "bash",
-        -- python
         "python",
+        "haskell",
       })
       if not opts.handlers then opts.handlers = {} end
       opts.handlers.python = function() end -- make sure python doesn't get set up by mason-nvim-dap, it's being set up by nvim-dap-python
