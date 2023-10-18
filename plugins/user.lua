@@ -1,3 +1,5 @@
+local utils = require "astronvim.utils"
+
 return {
   -- project
   {
@@ -19,26 +21,60 @@ return {
     dependencies = { "jay-babu/project.nvim" },
     opts = function() require("telescope").load_extension "projects" end,
   },
-
   -- git
   {
     "f-person/git-blame.nvim",
     event = "User AstroGitFile",
   },
-  -- {
-  --   "chrisgrieser/nvim-tinygit",
-  --   dependencies = {
-  --     "stevearc/dressing.nvim",
-  --     "rcarriga/nvim-notify", -- optional, for nice notifications
-  --   },
-  -- },
-
   -- copilot
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "User AstroFile",
     opts = { suggestion = { auto_trigger = true, debounce = 150 } },
+  },
+  -- neodim
+  {
+    "zbirenbaum/neodim",
+    event = "LspAttach",
+    opts = {
+      alpha = 0.75,
+      blend_color = "#000000",
+      update_in_insert = {
+        enable = true,
+        delay = 100,
+      },
+      hide = {
+        virtual_text = true,
+        signs = true,
+        underline = true,
+      },
+    },
+  },
+  -- comments
+  {
+    "folke/todo-comments.nvim",
+    opts = {},
+    event = "User AstroFile",
+  },
+  -- vim-move
+  -- {
+  --   "matze/vim-move",
+  --   event = "BufEnter",
+  -- },
+  -- clickable links
+  {
+    "sontungexpt/url-open",
+    event = "VeryLazy",
+    cmd = "URLOpenUnderCursor",
+    config = function()
+      local status_ok, url_open = pcall(require, "url-open")
+      if not status_ok then return end
+      url_open.setup {}
+    end,
+    keys = {
+      { "<C-LeftMouse>", "<cmd>URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
+    },
   },
 
   -- python
@@ -66,66 +102,26 @@ return {
     },
   },
 
-  -- compiler (unsure if this will work)
-  {
-    "Zeioth/compiler.nvim",
-    dependencies = {
-      {
-        "stevearc/overseer.nvim",
-        opts = {
-          task_list = { -- this refers to the window that shows the result
-            direction = "bottom",
-            min_height = 25,
-            max_height = 25,
-            default_detail = 1,
-            bindings = {
-              ["q"] = function() vim.cmd "OverseerClose" end,
-            },
-          },
-        },
-        config = function(_, opts) require("overseer").setup(opts) end,
-      },
-    },
-    cmd = { "CompilerOpen", "CompilerToggleResults" },
-    opts = {},
-  },
-
-  -- lazy.nvim
-  {
-    "sontungexpt/url-open",
-    event = "VeryLazy",
-    cmd = "URLOpenUnderCursor",
-    config = function()
-      local status_ok, url_open = pcall(require, "url-open")
-      if not status_ok then return end
-      url_open.setup {}
-    end,
-    keys = {
-      { "<C-LeftMouse>", "<cmd>URLOpenUnderCursor<cr>", desc = "Open URL under cursor" },
-    },
-  },
-
   -- haskell
-  {
-    "mrcjkb/haskell-tools.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope.nvim", optional = true },
-      { "mfussenegger/nvim-dap", optional = true },
-    },
-    version = "^2",
-    -- load the plugin when opening one of the following file types
-    ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
-    init = function()
-      local utils = require "astronvim.utils"
-      astronvim.lsp.skip_setup = utils.list_insert_unique(astronvim.lsp.skip_setup, "hls")
-      vim.g.haskell_tools = vim.tbl_deep_extend("keep", vim.g.haskell_tools or {}, {
-        hls = {
-          on_attach = function(client, bufnr, _) require("astronvim.utils.lsp").on_attach(client, bufnr) end,
-        },
-      })
-    end,
-  },
+  -- {
+  --   "mrcjkb/haskell-tools.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     { "nvim-telescope/telescope.nvim", optional = true },
+  --     { "mfussenegger/nvim-dap", optional = true },
+  --   },
+  --   version = "^2",
+  --   -- load the plugin when opening one of the following file types
+  --   ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+  --   init = function()
+  --     astronvim.lsp.skip_setup = utils.list_insert_unique(astronvim.lsp.skip_setup, "hls")
+  --     vim.g.haskell_tools = vim.tbl_deep_extend("keep", vim.g.haskell_tools or {}, {
+  --       hls = {
+  --         on_attach = function(client, bufnr, _) require("astronvim.utils.lsp").on_attach(client, bufnr) end,
+  --       },
+  --     })
+  --   end,
+  -- },
 
   -- Latex
   {

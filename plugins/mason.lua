@@ -17,7 +17,7 @@ return {
         -- toml
         "taplo",
         -- haskell
-        "hls",
+        -- "hls",
       })
     end,
   },
@@ -51,7 +51,7 @@ return {
       opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
         "bash",
         "python",
-        "haskell",
+        -- "haskell",
       })
       if not opts.handlers then opts.handlers = {} end
       opts.handlers.python = function() end -- make sure python doesn't get set up by mason-nvim-dap, it's being set up by nvim-dap-python
